@@ -1,6 +1,6 @@
 name: "Jacob Slack Bot"
 version: "1.0.0"
-slug: "jacob_slack_bot"
+slug: jacobbot
 description: "Slack acronym helper bot"
 startup: services
 boot: auto
