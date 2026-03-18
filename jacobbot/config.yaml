@@ -1,0 +1,17 @@
+name: "Jacob Slack Bot"
+version: "1.0.0"
+slug: "jacob_slack_bot"
+description: "Slack acronym helper bot"
+startup: services
+boot: auto
+options:
+  slack_bot_token: ""
+  slack_app_token: ""
+schema:
+  slack_bot_token: str
+  slack_app_token: str
+ports: {}
+map:
+  - config:rw
+  - share:rw
+  - addons:rw
