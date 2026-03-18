@@ -23,9 +23,6 @@ app = App(token=os.environ["SLACK_BOT_TOKEN"])
 ACRONYM_REGEX = r"\b[A-Z]{2,10}\b"
 pending = {}
 
-# -------------------------------------------------------
-# Detect acronyms in normal messages
-# -------------------------------------------------------
 @app.event("message")
 def detect_acronyms(event, say):
     if "text" not in event:
@@ -46,9 +43,6 @@ def detect_acronyms(event, say):
                 thread_ts=thread_ts
             )
 
-# -------------------------------------------------------
-# Slash command: /jacobbothelper
-# -------------------------------------------------------
 @app.command("/jacobbothelper")
 def command(ack, body, client):
     ack()
@@ -79,9 +73,6 @@ def command(ack, body, client):
             text="Use: addnew or delete"
         )
 
-# -------------------------------------------------------
-# Handle user replies for add/delete flows
-# -------------------------------------------------------
 @app.event("message")
 def handle_user_input(event, client):
     user = event.get("user")
@@ -95,7 +86,6 @@ def handle_user_input(event, client):
 
     state = pending[user]
 
-    # ADD FLOW
     if state["mode"] == "add_wait_acronym":
         pending[user] = {
             "mode": "add_wait_meaning",
@@ -120,7 +110,6 @@ def handle_user_input(event, client):
         del pending[user]
         return
 
-    # DELETE FLOW
     if state["mode"] == "delete_wait_acronym":
         acronym = text.upper()
         if acronym in acronyms:
@@ -140,9 +129,6 @@ def handle_user_input(event, client):
         del pending[user]
         return
 
-# -------------------------------------------------------
-# Start Socket Mode
-# -------------------------------------------------------
 if __name__ == "__main__":
     handler = SocketModeHandler(app, os.environ["SLACK_APP_TOKEN"])
     handler.start()
